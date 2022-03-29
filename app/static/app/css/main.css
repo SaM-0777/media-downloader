@@ -1,0 +1,71 @@
+body{
+    padding: 0%;
+    margin: 0%;
+    border: none;
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {font-size: 32px;}
+h2 {font-size: 28px;}
+h3 {font-size: 24px;}
+h4 {font-size: 22px;}
+h5 {font-size: 18px;}
+h6 {font-size: 16px;}
+
+/*#search-box {
+    margin-bottom: 1rem;
+}*/
+
+#response-section {
+    margin-bottom: 15rem;
+}
+
+#tutorial-section {
+    margin-bottom: 7rem;
+}
+
+#info-section {
+    margin-bottom: 7rem;
+}
+
+div [data-side = "left"] {
+    transform: translateY(100%);
+    height: max-content;
+}
+
+div [data-icon = "1"] img {
+    padding: 5rem;
+}
+
+div [data-icon = "2"] {
+    top: 8%;
+    right: -2%;
+    width: fit-content;
+}
+
+div [data-icon = "3"] {
+    bottom: 5%;
+    left: -10%;
+    width: fit-content;
+}
+
+#step-list {
+    /*border: 1px dotted #eee;*/
+    /*box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;*/
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#step-list li {
+    background-color: #eee;
+}
+
+#info-section {
+    margin-top: 15rem;
+}
+
+#info-section .container {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
