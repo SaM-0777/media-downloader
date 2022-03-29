@@ -10,27 +10,27 @@ class YoutubeStream():
         try:
             yt = YouTube(self.url)
         except E.RegexMatchError as e:
-            return {"error": "Error Check ur"}
+            return {"error": "Error Check url"}
         except E.HTMLParseError as e:
-            return {"error": "Oops somethingwent wrong!"}
+            return {"error": "Oops something went wrong!"}
         except E.ExtractError as e:
-            return {"error": "Oops somethingwent wrong!"}
+            return {"error": "Oops something went wrong!"}
         except E.VideoUnavailable as e:
             return {"error": "Video unavailale"}
         except E.VideoPrivate as e:
-            return {"error": "Video is privae"}
+            return {"error": "Video is private"}
         except E.VideoRegionBlocked as e:
-            return {"error": "Video is blockd in your region"}
+            return {"error": "Video is blocked in your region"}
         except E.AgeRestrictedError as e:
             return {"error": "Video is age Rstricted"}
         except E.LiveStreamError as e:
             return {"error": "Live stream can not be downloded"}
         except E.MaxRetriesExceeded as e:
-            return {"error": "Oops somethingwent wrong!"}
+            return {"error": "Oops something went wrong!"}
         except E.MembersOnly as e:
-            return {"error": "Oops somethingwent wrong!"}
+            return {"error": "Oops something went wrong!"}
         except E.RecordingUnavailable as e:
-            return {"error": "Recording unavilable"}
+            return {"error": "Recording unavialable"}
         else:
             return self.response_wrapper(yt)
 
