@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             toggleResponseSection()     // on
                         }
                         // render error
-                        else renderErrorResponse("An error occured, Try again")
+                        else renderErrorResponse(response)
                         
                         toggleLoadingAnimation()    // off
                         searchButton.disabled = false
@@ -130,7 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // error - response
             function renderErrorResponse(response) {
                 // render error
-                errorResponse.querySelector("h5").append(response.error || "Oops something went wrong, try again")
+                console.log(response)
+                if (response.error) var errorMsg = response.error
+                else errorMsg = "Oops something went wrong, try again"
+                errorResponse.querySelector("h5").append(errorMsg)
                 toggleErrorSection()    // on
             }
 

@@ -20,47 +20,45 @@
 
     <!-- Header -->
     <section class="" id="header">
-        <header>
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container">
-                        <a class="navbar-brand" href="#">Start Bootstrap</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarResponsive">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{% url 'app:home' %}">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Services</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#">Start Bootstrap</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'app:home' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-            </div>
-        </header>
+                </div>
+            </nav>
+        </div>
     </section>
 
     <!-- search-area -->
-    <section class="mb-lg-0 mb-md-5" id="search-section">
-        <div class="container">
-            <div class="row">
+    <section class="mb-lg-0 mb-5 mt-lg-0 mt-5" id="search-section">
+        <div class="container px-3 pb-5">
+            <div class="row align-items-center px-5 pb-5">
                 <div class="col-lg-6 col-12 mb-5 mb-lg-0" data-side="left">
                     <div class="row">
                         <h1 class="" style="font-size: 60px;">Free Video Downloader</h1>
                         <p class="mt-4 text-muted">Fast and free all in one video downloader</p>
                         <div class="container">
-                            <div class="" id="error" style="background-color: #FBF7DE;">
+                            <div class="me-lg-5 me-md-3" id="error" style="background-color: #FBF7DE; border-radius: 5px">
                                 <div class="d-flex align-content-center justify-content-center" style="color: #A98135;">
                                     <h5 class="h5 py-3"></h5>
                                 </div>
@@ -69,7 +67,7 @@
                         <form action="">
                             {% csrf_token %}
                             <div class="row" id="search-box">
-                                <div class="form-outline mb-3">
+                                <div class="form-outline mb-5">
                                     <label class="form-label" for="search"></label>
                                     <div class="input-group input-group-lg pe-lg-5 pe-md-3">
                                         <input class="form-control search-input" type="text" name="search" id="search" 
@@ -77,20 +75,20 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button class="btn btn-danger py-2 px-3" type="button" id="search-button">Download</button>
+                                    <button class="btn btn-danger btn-lg py-2 px-3" type="button" id="search-button">Download</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-6 col-12 m-0 p-0 mt-md-5 d-none d-lg-block" data-side="right">
+                <div class="col-lg-6 col-12 m-0 p-0 mb-lg-0 mb-5 d-none d-lg-flex" data-side="right">
                     <div class="row position-relative" data-icon="1">
-                        <img class="" src="{% static 'app/image/icon.png' %}" alt="" srcset="">
+                        <img class="" src="{% static 'app/image/icon.png' %}" alt="" srcset="" style="width: auto; height:fit-content;">
                         <div class="position-absolute" data-icon="2">
-                            <img class="" src="{% static 'app/image/icon-top-right.png' %}" alt="" srcset="">
+                            <img class="" src="{% static 'app/image/icon-top-right.png' %}" alt="" srcset="" style="width: auto; height:fit-content;">
                         </div>
                         <div class="position-absolute" data-icon="3">
-                            <img class="" src="{% static 'app/image/icon-bottom-left.png' %}" alt="" srcset="">
+                            <img class="" src="{% static 'app/image/icon-bottom-left.png' %}" alt="" srcset="" style="width: auto; height:fit-content;">
                         </div>
                     </div>
                 </div>
@@ -99,7 +97,7 @@
     </section>
 
     <!-- result area -->
-    <section id="response-section">
+    <section class="px-lg-0 px-3" id="response-section">
         <!-- for success  -->
         <div class="container" id="success">
             <div class="row">
@@ -129,7 +127,7 @@
     </section>
 
     <!-- tutorial -->
-    <section class="mt-lg-0 mt-5" id="tutorial-section">
+    <section class="mt-lg-0 mt-5 mb-15 px-lg-0 px-3" id="tutorial-section">
         <div class="container">
             <div class="row">
                 <!-- Youtube tutorial link -->
@@ -210,7 +208,7 @@
     </section> -->
 
     <!-- footer -->
-    <section class="bg-dark" id="footer-section">
+    <section class="bg-dark mt-5" id="footer-section">
         <div class="container">
             <footer class="text-center text-lg-start">
                 <div class="container d-flex justify-content-center py-5">
