@@ -12,7 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const successIframe = successResponse.querySelector("#youtube-embed")
     const videoTitle = successResponse.querySelector("#video-title")
     const downloadChoice = successResponse.querySelector("#download-choice")
-    const errorResponse = responseSection.querySelector("#error")
+    const errorResponse = document.querySelector("#search-section").querySelector("#error")
+    
+
+    // toggle error section
+    function toggleErrorSection() {
+        if (errorResponse.style.display == "none") {
+            errorResponse.style.display = ""
+        }
+        else if (errorResponse.style.display == "") {
+            errorResponse.style.display = "none"
+        }
+    }
+    // toggle - off error-section
+    toggleErrorSection()
     
     // toggle response-section
     function toggleResponseSection() {
@@ -25,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-    
     // toggle-off response-section
     toggleResponseSection()     // off
     
@@ -86,22 +98,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 $.ajax({
                     data: { 'value': searchInput.value },
                     dataType: "json",
+                    timeout: 3000,
                     complete: function () {
                         // stop animation
 
                     },
                     success: function (response) {
                         // console.log(response)
-                        renderSuccessResponse(response)
-                        toggleResponseSection()     // on
+                        if (response.title) {
+                            renderSuccessResponse(response)
+                            toggleResponseSection()     // on
+                        }
+                        // render error
+                        else renderErrorResponse("An error occured, Try again")
+                        
                         toggleLoadingAnimation()    // off
                         searchButton.disabled = false
                         searchButton.textContent = "Download"
                     },
                     error: function (response) {
-                        console.log("Error ", response)
                         renderErrorResponse(response)
-                        toggleResponseSection()     // on
                         toggleLoadingAnimation()    // off
                         searchButton.disabled = false
                         searchButton.textContent = "Download"
@@ -111,6 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             // ajax-call completed
 
+            // error - response
+            function renderErrorResponse(response) {
+                // render error
+                errorResponse.querySelector("h5").append(response.error || "Oops something went wrong, try again")
+                toggleErrorSection()    // on
+            }
 
             // success - response
             function renderSuccessResponse(response) {
@@ -131,14 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // part - 2 ()
 
             }
-
-            // error - response
-            function renderErrorResponse(response) {
-                console.log(response)
-            }
-
-
-
+            
             function getDownloadButtons(stream) {
 
                 // required variables
@@ -154,10 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (contentType == "audio") {
                     btnStyle = "btn-danger"
                     iconType = "audio"
-                    var quality = getBitrate(stream.bitrate)
-                    if (formatType == "mp4") {
-                        formatType = "m4a"
-                    }
+                    var quality = getBitrate(stream.bitrate || "")
+                    if (formatType == "mp4") formatType = "m4a"
                 }
                 else if (contentType == "video") {
                     var quality = stream.qualityLabel
@@ -168,12 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 // content length
-                if (contentLength) {
-                    var downloadSize = getDownloadSize(contentLength)
-                }
-                else {
-                    var downloadSize = ""
-                }
+                if (contentLength) var downloadSize = getDownloadSize(contentLength)
+                else var downloadSize = ""
 
                 // create a
                 let a = document.createElement("a")
@@ -194,26 +203,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // icon - span
             function getIconSpan(iconType) {
-
                 let i = document.createElement("i")
                 let span = document.createElement("span")
-                span.append(i)
                 i.classList.add(...["fa-solid", "me-1"])
-                if (iconType == "video") {
-                    i.classList.add("fa-video")
-                }
-                else if (iconType == "audio") {
-                    i.classList.add("fa-music")
-                }
-                else if (iconType == "adaptiveVideo") {
-                    i.classList.add("fa-volume-xmark")
-                }
+                span.append(i)
+                
+                if (iconType == "video") i.classList.add("fa-video")
+                
+                else if (iconType == "audio") i.classList.add("fa-music")
+                
+                else if (iconType == "adaptiveVideo") i.classList.add("fa-volume-xmark")
+                
                 return span
             }
 
             // bitrate
             function getBitrate(bitrate) {
-                if (bitrate > 1024) {
+                while (bitrate > 1024) {
                     bitrate = bitrate / 1024
                 }
                 return bitrate.toString().split(".")[0] + "KBPS"
@@ -229,14 +235,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 var downloadSize = size.toFixed(1).toString()
                 return "(" + downloadSize + sizeUnit[k - 1] + ")"
             }
-
-
         }
-
     }
-
-
 })
+
 
 
 

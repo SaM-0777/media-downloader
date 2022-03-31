@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'app'
 urlpatterns = [
-    path("", views.index, name= "home"),
-    path("ytresponse", views.yt_response, name= "youtube-response")
+    path('', views.index, name= "home"),
+    path('ytresponse', views.yt_response, name= "youtube-response")
 ]
 

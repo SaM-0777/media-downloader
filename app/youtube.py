@@ -10,31 +10,42 @@ class YoutubeStream():
         try:
             yt = YouTube(self.url)
         except E.RegexMatchError as e:
-            return {"error": "Error Check url"}
+            error = "Make sure url is valid"
+            return {"error": error}
         except E.HTMLParseError as e:
-            return {"error": "Oops something went wrong!"}
+            error = "Oops something went wrong, try again with different url"
+            return {"error": error}
         except E.ExtractError as e:
-            return {"error": "Oops something went wrong!"}
+            error = "Oops something went wrong, try again with different url"
+            return {"error": error}
         except E.VideoUnavailable as e:
-            return {"error": "Video unavailale"}
+            error = "Video Unavailable, try again with different url"
+            return {"error": error}
         except E.VideoPrivate as e:
-            return {"error": "Video is private"}
+            error = "This video is private and can not be downloded, try again with different video"
+            return {"error": error}
         except E.VideoRegionBlocked as e:
-            return {"error": "Video is blocked in your region"}
+            error = "Video is blocked in your region, try again with different video"
+            return {"error": error}
         except E.AgeRestrictedError as e:
-            return {"error": "Video is age Rstricted"}
+            error = "Video is Age Restricted and can not be downloaded, try again with different video"
+            return {"error": error}
         except E.LiveStreamError as e:
-            return {"error": "Live stream can not be downloded"}
+            error = "Live streams can not be downloaded, try again with different video"
+            return {"error": error}
         except E.MaxRetriesExceeded as e:
-            return {"error": "Oops something went wrong!"}
+            error = "Oops something went wrong try again"
+            return {"error": error}
         except E.MembersOnly as e:
-            return {"error": "Oops something went wrong!"}
+            error = "Permission denied by Youtube, try again with different video"
+            return {"error": error}
         except E.RecordingUnavailable as e:
-            return {"error": "Recording unavialable"}
+            error = "Recording unavailable, try again with different video"
+            return {"error": error}
         else:
-            return self.response_wrapper(yt)
+            return self.wrap_response(yt)
 
-    def response_wrapper(self, yt):
+    def wrap_response(self, yt):
         # return json (title, streams)
         stream_title = yt.title
         streams = yt.streaming_data
