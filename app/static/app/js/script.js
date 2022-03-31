@@ -130,9 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // error - response
             function renderErrorResponse(response) {
                 // render error
-                console.log(response)
-                if (response.error) var errorMsg = response.error
-                else errorMsg = "Oops something went wrong, try again"
+                // console.log(response)
+                var errorMsg = response.error || "Oops something went wrong, try again"
                 errorResponse.querySelector("h5").append(errorMsg)
                 toggleErrorSection()    // on
             }
@@ -241,7 +240,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 })
-
-
 
 
