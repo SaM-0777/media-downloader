@@ -78,11 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleLoadingAnimation()    // on
             searchButton.disabled = true
 
+            // remove child
+            downloadChoice.remove()
+
             // make ajax-call
             // callback url
             const callbackUrl = getUrl()
 
-            setTimeout(makeAjaxCall, 3000)
+            setTimeout(makeAjaxCall, 4000)
 
             // ajax call
             function makeAjaxCall() {
@@ -113,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         else renderErrorResponse(response)
                         
                         toggleLoadingAnimation()    // off
+                        window.location.hash = "#response-section"
                         searchButton.disabled = false
                         searchButton.textContent = "Download"
                     },
@@ -132,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // render error
                 // console.log(response)
                 var errorMsg = response.error || "Oops something went wrong, try again"
-                errorResponse.querySelector("h5").append(errorMsg)
+                errorResponse.querySelector("h5").textContent = errorMsg
                 toggleErrorSection()    // on
             }
 
@@ -199,6 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 qualityDiv.append(quality)
                 formatDiv.append(...[getIconSpan(iconType), formatType])
                 downloadSizeDiv.append(downloadSize)
+
+                a.download = videoTitle.textContent || "playback" + formatType
 
                 return a
             }
