@@ -56,7 +56,7 @@ toggleLoadingAnimation(0)    // off
 document.addEventListener("DOMContentLoaded", () => {
     searchButton.onclick = function () {
         console.log("clicked....")
-        searchInput.onchange = () => {
+        searchInput.onchange = function () {
             console.log("input changed....")
             // validate search-field
             if (searchInput.value != "") {
@@ -75,6 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const callbackUrl = getUrl()
                 makeAjaxCall(callbackUrl)
                 return
+            }
+            else {
+                console.log("Value Empty!")
             }
         }
         successResponse.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
