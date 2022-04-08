@@ -1,3 +1,10 @@
+const scrollButton = document.querySelector("#scroll-to-search-aria")
+scrollButton.onclick = () => {
+    document.querySelector("#search-section").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+}
+
+
+
 // search-box
 const searchInput = document.querySelector("#search-box").querySelector(".search-input")
 const searchButton = document.querySelector("#search-box").querySelector("#search-button")
@@ -48,7 +55,9 @@ toggleLoadingAnimation(0)    // off
 // main
 document.addEventListener("DOMContentLoaded", () => {
     searchButton.onclick = function () {
+        console.log("clicked....")
         searchInput.onchange = () => {
+            console.log("input changed....")
             // validate search-field
             if (searchInput.value != "") {
                 // start loading-animation
@@ -56,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 searchButton.append(animationSpan)
                 toggleLoadingAnimation(1)    // on
                 searchButton.disabled = true
+
+                console.log("downloading....")
 
                 // remove children
                 downloadChoice.innerHTML = ""
@@ -95,6 +106,7 @@ function makeAjaxCall(callback) {
             // console.log(response)
             // console.log(response.title)
             if (response.title) {
+                toggleErrorSection(0)
                 renderSuccessResponse(response)
                 toggleResponseSection(1)     // on
             }
@@ -159,8 +171,9 @@ function getDownloadButtons(stream) {
     // required variables
     var ahref = stream.url
     var contentLength = stream.contentLength
-    var contentType = stream.mimeType.split(";")[0].split("/")[0]   // video or audio
-    var formatType = stream.mimeType.split(";")[0].split("/")[1]    // content format (MP4, 3GPP, M4A)
+    var mimeType = stream.mimeType.split(";")[0]
+    var contentType = mimeType.split("/")[0]   // video or audio
+    var formatType = mimeType.split("/")[1]    // content format (MP4, 3GPP, M4A)
     var btnStyle = "btn-info"
     var iconType = "adaptiveVideo"
 
@@ -199,6 +212,8 @@ function getDownloadButtons(stream) {
     downloadSizeDiv.append(downloadSize)
 
     a.download = videoTitle.textContent + "." + formatType
+    a.target = "_blank"
+    // a.onclick = downloadMedia(ahref, mimeType, videoTitle.textContent + "." + formatType)
 
     // console.log(a.download)
 
@@ -224,6 +239,7 @@ function getBitrate(bitrate) {
     }
     return bitrate.toString().split(".")[0] + "KBPS"
 }
+
 // download size
 function getDownloadSize(contentLength) {
     var size = parseInt(contentLength)
@@ -237,3 +253,13 @@ function getDownloadSize(contentLength) {
 }
 
 
+/*function downloadMedia(element, href, mimeType = "application/octet-stream", fileName) {
+    const a = element
+    let file = fetch(href).then(r => r.blob()).then(
+        blobFile => new File([blobFile], fileName, { type: mimeType })
+    )
+    const fileLink = URL.createObjectURL(file)
+    a.href = fileLink
+    a.click()
+    URL.revokeObjectURL(href)
+}*/
