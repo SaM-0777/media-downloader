@@ -3,8 +3,6 @@ scrollButton.onclick = () => {
     document.querySelector("#search-section").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
 }
 
-
-
 // search-box
 const searchInput = document.querySelector("#search-box").querySelector(".search-input")
 const searchButton = document.querySelector("#search-box").querySelector("#search-button")
@@ -18,6 +16,12 @@ const successIframe = successResponse.querySelector("#youtube-embed")
 const videoTitle = successResponse.querySelector("#video-title")
 
 const sizeUnit = ["KB", "MB", "GB", "TB"]
+var searchInputValueState = 0
+
+// trigger state when input value is modified
+searchInput.addEventListener("change", () => {
+    searchInputValueState = 1
+})
 
 // toggle error section
 function toggleErrorSection(state) {
@@ -53,37 +57,28 @@ toggleLoadingAnimation(0)    // off
 
 
 // main
-document.addEventListener("DOMContentLoaded", () => {
-    searchButton.onclick = function () {
-        console.log("clicked....")
-        searchInput.onchange = function () {
-            console.log("input changed....")
-            // validate search-field
-            if (searchInput.value != "") {
-                // start loading-animation
-                searchButton.textContent = "Loading"
-                searchButton.append(animationSpan)
-                toggleLoadingAnimation(1)    // on
-                searchButton.disabled = true
+searchButton.onclick = function () {
+    // validate search-field
+    if (searchInput.value != "" && searchInput.value != null && searchInputValueState) {
+        // console.log("Validation successful")
+        searchInputValueState = 0
+        // start loading-animation
+        searchButton.textContent = "Loading"
+        searchButton.append(animationSpan)
+        toggleLoadingAnimation(1)    // on
+        searchButton.disabled = true
 
-                console.log("downloading....")
+        // remove children
+        downloadChoice.innerHTML = ""
 
-                // remove children
-                downloadChoice.innerHTML = ""
-
-                // callback url
-                const callbackUrl = getUrl()
-                makeAjaxCall(callbackUrl)
-                return
-            }
-            else {
-                console.log("Value Empty!")
-            }
-        }
-        successResponse.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+        // callback url
+        const callbackUrl = getUrl()
+        makeAjaxCall(callbackUrl)
         return
     }
-})
+    successResponse.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    return
+}
 
 
 // ajax call
