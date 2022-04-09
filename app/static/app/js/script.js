@@ -161,7 +161,7 @@ function renderSuccessResponse(response) {
         downloadChoice.append(getDownloadButtons(streams[i]))
     }
     // part - 2 ()
-
+    download()
 }
 
 function getDownloadButtons(stream) {
@@ -203,18 +203,15 @@ function getDownloadButtons(stream) {
     a.append(...[qualityDiv, formatDiv, downloadSizeDiv])
 
     // set properties
-    a.href = ahref
-    a.classList.add(...["col-lg-2", "col-md-3", "col-3", "mx-1", "my-1", "btn", btnStyle])
+    // a.id = "download-btn"
+    a.href = "https://cors-anywhere.herokuapp.com/" + ahref
+    a.classList.add(...["col-lg-2", "col-md-3", "col-3", "mx-1", "my-1", "btn", btnStyle, "download"])
     qualityDiv.append(quality)
     formatDiv.append(...[getIconSpan(iconType), formatType])
     downloadSizeDiv.append(downloadSize)
 
-    a.download = videoTitle.textContent + "." + formatType
-    a.target = "_blank"
-    // a.onclick = downloadMedia(ahref, mimeType, videoTitle.textContent + "." + formatType)
-
-    // console.log(a.download)
-
+    a.dataset.filename = videoTitle.textContent + "." + formatType
+    // a.target = "_blank"
     return a
 }
 
@@ -251,13 +248,22 @@ function getDownloadSize(contentLength) {
 }
 
 
-/*function downloadMedia(element, href, mimeType = "application/octet-stream", fileName) {
-    const a = element
-    let file = fetch(href).then(r => r.blob()).then(
-        blobFile => new File([blobFile], fileName, { type: mimeType })
-    )
-    const fileLink = URL.createObjectURL(file)
-    a.href = fileLink
-    a.click()
-    URL.revokeObjectURL(href)
-}*/
+function download() {
+    downloadChoice.querySelectorAll(".download").forEach((a, index) => {
+        a.addEventListener("click", async (e) => {
+            e.preventDefault()
+            let element = downloadChoice.querySelectorAll(".download")[index]
+            // const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+            const url = element.href
+            // console.log("URL : ", url)
+            const file = await fetch(url)
+            const blob = await file.blob()
+            const blobUrl = URL.createObjectURL(blob)
+            const downloadLink = document.createElement("a")
+            downloadLink.href = blobUrl
+            downloadLink.download = element.dataset.filename
+            downloadLink.click()
+            // console.log("done!")
+        })
+    })
+}
