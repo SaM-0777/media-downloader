@@ -167,7 +167,7 @@ function renderSuccessResponse(response) {
 function getDownloadButtons(stream) {
 
     // required variables
-    var ahref = stream.url
+    // var ahref = stream.url
     var contentLength = stream.contentLength
     var mimeType = stream.mimeType.split(";")[0]
     var contentType = mimeType.split("/")[0]   // video or audio
@@ -181,7 +181,8 @@ function getDownloadButtons(stream) {
         btnStyle = "btn-danger"
         iconType = "audio"
         var quality = getBitrate(stream.bitrate || "")
-        if (formatType == "mp4") formatType = "m4a"
+        // if (formatType == "mp4") formatType = "m4a"
+        formatType = "mp3"
     }
     else if (contentType == "video") {
         var quality = stream.qualityLabel
@@ -204,13 +205,16 @@ function getDownloadButtons(stream) {
 
     // set properties
     // a.id = "download-btn"
-    a.href = "https://cors-anywhere.herokuapp.com/" + ahref
+    // const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+    // a.href = ahref
     a.classList.add(...["col-lg-2", "col-md-3", "col-3", "mx-1", "my-1", "btn", btnStyle, "download"])
+    qualityDiv.id = "quality"
     qualityDiv.append(quality)
     formatDiv.append(...[getIconSpan(iconType), formatType])
     downloadSizeDiv.append(downloadSize)
 
-    a.dataset.filename = videoTitle.textContent + "." + formatType
+    // a.dataset.filename = videoTitle.textContent + "." + formatType
+    a.dataset.contentType = formatType
     // a.target = "_blank"
     return a
 }
@@ -251,7 +255,7 @@ function getDownloadSize(contentLength) {
 function download() {
     downloadChoice.querySelectorAll(".download").forEach((a, index) => {
         a.addEventListener("click", async (e) => {
-            e.preventDefault()
+            /*e.preventDefault()
             let element = downloadChoice.querySelectorAll(".download")[index]
             // const proxyUrl = "https://cors-anywhere.herokuapp.com/"
             const url = element.href
@@ -263,7 +267,14 @@ function download() {
             downloadLink.href = blobUrl
             downloadLink.download = element.dataset.filename
             downloadLink.click()
-            // console.log("done!")
+            // console.log("done!")*/
+            let element = downloadChoice.querySelectorAll(".download")[index]
+            let link = searchInput.value
+            if (element.dataset.contentType) var format = element.dataset.contentType
+            else var format = element.querySelector("#quality").textContent.split("p")[0]
+            if (format == "144") format = "mp4a"
+            console.log(link, format)
+            element.innerHTML = '<iframe style="width:100%;height:min-content;border:0;overflow:hidden;" scrolling="no" src="https://loader.to/api/button/?url=' + link + '&f=' + format + '"></iframe>'
         })
     })
 }
